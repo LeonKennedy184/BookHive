@@ -9,6 +9,12 @@ BookHive es una aplicación de e-commerce para la venta de libros. Esta aplicaci
 - Carrito de compras persistente vinculado al usuario autenticado
 - Filtrado y ordenación de productos
 
+## Datos útiles para manipular el proyecto:
+
+- A pesar de que los usuarios pueden ser creados, la cuenta predeterminada de un usuario es "usuario@gmail.com", de contraseña "user123".
+- Para poder manipular la base de datos directamente se necesita estar admitido en la misma. Sin embargo, éste es el enlace: https://console.firebase.google.com/u/0/project/bookhive28/firestore/databases/-default-/data/~2Forders~2F1?hl=es-419
+- Existe un ReadMe dentro del proyecto con más información a ser consultada.
+
 ## Tecnologías utilizadas
 
 - React
