@@ -1,0 +1,44 @@
+.admin-page {
+  padding: 20px;
+  justify-content: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+}
+
+form div {
+  margin-bottom: 10px;
+  justify-content: center;
+}
+
+form label {
+  margin-right: 10px;
+  justify-content: center;
+}
+
+form input, form select {
+  padding: 5px;
+  justify-content: center;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: start;
+  gap: 10px;
+}
+
+form button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: #0056b3;
+}

@@ -1,0 +1,51 @@
+.controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.product-div {
+  margin-left: 20px;
+}
+
+.controls input,
+.controls select,
+.controls button {
+  padding: 11px;
+  font-size: 16px;
+  border-radius: 10px;
+  border-style: solid;
+}
+
+.product-loading {
+  margin-left: 20px;
+}
+
+.controls button {
+  cursor: pointer;
+}
+
+.category {
+  font-size: 20px;
+}
+
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.product-card {
+  border: 1px solid #ffffff;
+  padding: 10px;
+  width: 200px;
+  text-align: center;
+}
+
+.sort-buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}

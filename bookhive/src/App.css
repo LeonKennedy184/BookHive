@@ -1,0 +1,46 @@
+.card-container{
+  width: 15rem;
+  border: 1px solid black;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  padding-top: 0;
+  color: #BF247A;
+}
+
+.all2 {
+  background-color: black;
+  color: black;
+}
+
+.app-loading {
+  margin-left: 20px;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card-container img{
+  width: 90%;
+  border-radius: 1rem;
+}
+
+.card-container button{
+  width: 90%;
+  border-radius: 1rem;
+  background-color: #D9731A;
+  color: #2A2359;
+}
+
+.cards-container{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  justify-content: center;
+  gap: 1rem;
+  background-color: black;
+}
+

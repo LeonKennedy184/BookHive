@@ -1,0 +1,25 @@
+.catDiv {
+    padding: 20px;
+    background-color: #c69efd;
+  }
+  
+ .catH2 {
+    margin-top: 5;
+  }
+  
+ .catUl {
+    list-style: none;
+    padding: 0;
+  }
+  
+ .catList {
+    display: inline-block;
+    margin-right: 25px;
+    padding: 7px;
+    border: 1.5px solid rgb(153, 0, 94);
+    border-radius: 18px;
+    font-size: 18px;
+    font-style: normal;
+    background-color: #D876F5;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+  }

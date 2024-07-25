@@ -1,0 +1,56 @@
+.order-confirmation-container {
+    padding: 20px;
+  }
+  
+  .order-confirmation-container h2 {
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+  
+  .order-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  
+  .order-item .order-item-total {
+    font-weight: bold;
+  }
+  
+  .order-summary {
+    margin-top: 16px;
+  }
+  
+  .order-summary .include-shipping {
+    margin-bottom: 12px;
+    font-size: 16px;
+  }
+  
+  .order-summary .order-total {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+  
+  .order-summary button {
+    margin-top: 12px;
+  }
+
+  .user-details {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+  }
+  
+  .user-details > div {
+    flex: 1;
+    margin: 0 10px;
+  }
+  
+  .user-details h3 {
+    margin-bottom: 10px;
+  }
+  
+  .user-details p {
+    margin: 5px 0;
+  }

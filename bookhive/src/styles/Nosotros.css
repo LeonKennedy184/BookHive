@@ -1,0 +1,16 @@
+  body {
+    padding: 20px;
+    margin-left: 20px;
+  }
+
+p {
+   font-size: 19px;
+ }
+
+ a.mail {
+    font-style: italic;
+ }
+
+.usDiv{
+  margin-left: 20px;
+}
