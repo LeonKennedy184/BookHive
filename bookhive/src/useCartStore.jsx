@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { collection, doc, setDoc, getDoc, deleteDoc, updateDoc, getDocs } from 'firebase/firestore';
+import { collection, doc, setDoc, getDoc, deleteDoc, updateDoc, getDocs, writeBatch } from 'firebase/firestore';
 import { db } from './firebaseConfig';
 import { auth } from './firebaseConfig';
 
@@ -81,7 +81,23 @@ export const useCartStore = create(set => ({
         set({ products: cartProducts });
       }
     },
-    clearCart: () => set({ products: [] }),
+    clearCart: async () => {
+      const user = auth.currentUser;
+      if (user) {
+        const cartRef = collection(db, 'users', user.uid, 'cart');
+        const querySnapshot = await getDocs(cartRef);
+        const batch = writeBatch(db);
+        querySnapshot.forEach(doc => {
+          batch.delete(doc.ref);
+        });
+        try {
+          await batch.commit();
+        } catch (error) {
+          console.error('Error al vaciar el carrito en Firestore: ', error);
+        }
+      }
+      set({ products: [] });
+    },
     setUser: user => set({ user })
   },
 }));

@@ -1,50 +1,129 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../styles/FeaturedProducts.css';
 import ProductCardHome from './ProductCardHome';
+import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
+import { db } from '../firebaseConfig';
+import { useCartStore } from '../useCartStore';
+import Spinner from './Spinner';
 
-
-import producto1Image from '../assets/imperio-final.png'
-import producto2Image from '../assets/pozo-ascencion.png';
-import producto3Image from '../assets/heroe-de-las-eras.png'
-import producto4Image from '../assets/aleación-de-ley.png'
-import producto5Image from '../assets/name-wind.png'
-import producto6Image from '../assets/temor.png'
-import producto7Image from '../assets/juego-de-tronos.png'
-import producto8Image from '../assets/ultimo-deseo.png'
-
-const products = [
-  { id: 1, name: 'Nacidos de la Bruma I - El Imperio Final', price: 41568, image: producto1Image, alt: 'ImperioFinal' },
-  { id: 2, name: 'Nacidos de la Bruma II -El Pozo de la Ascención', price: 41599, image: producto2Image, alt: 'Pozo' },
-  { id: 3, name: 'Nacidos de la Bruma III -El Héroe de las Eras', price: 41599, image: producto3Image, alt: 'Heroe' },
-  { id: 4, name: 'Nacidos de la Bruma IV -Aleación de Ley', price: 23999, image: producto4Image, alt: 'Aleación'},
-];
-
-const products2 = [
-    { id: 5, name: 'El Nombre del Viento', price: 49599, category: 'Alta Fantasía', image: producto5Image, alt: 'ImperioFinal' },
-    { id: 6, name: 'El Temor de un Hombre Sabio', price: 49399, category: 'Alta Fantasía', image: producto6Image, alt: 'Pozo' },
-    { id: 7, name: 'Canción de Hielo y Fuego I - Juego de Tronos', price: 34599, category: 'Acción', image: producto7Image, alt: 'Heroe' },
-    { id: 8, name: 'La Saga de Geralt de Rivia I - El Último Deseo', price: 28600, category: 'Auto Ayuda', image: producto8Image, alt: 'Aleación'},
-];
-
+const FEATURED_PRODUCT_IDS = ['PrimerDocumento', 'YGFKvqu0VbYql9xJdJOu', 'iJMa9aNUjYb1pQgfr1RO'];
+const ADDITIONAL_PRODUCT_IDS = ['f72ga5Z0ytHEv9Cl2IWV', 'KtpxvMWmCK5itoPb0Pfu', 'G7eN6UTfIVbHY4SHxDn0', 'yRSAO7R05CwHBaCPFV72'];
+const THIRD_PRODUCT_IDS = ['39', '40'];
+const FOURTH_PRODUCT_IDS = ['33', '34', '35', '36'];
 
 function FeaturedProducts() {
-  
-  
+  const [products, setProducts] = useState([]);
+  const [additionalProducts, setAdditionalProducts] = useState([]);
+  const [thirdProducts, setThirdProducts] = useState([]);
+  const [fourthProducts, setFourthProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const { addProduct } = useCartStore(state => state.actions);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      setLoading(true);
+      const productsData = [];
+      for (const id of FEATURED_PRODUCT_IDS) {
+        const docRef = doc(db, 'products', id);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          productsData.push({ id: docSnap.id, ...docSnap.data() });
+        }
+      }
+      setProducts(productsData);
+      setLoading(false);
+    };
+
+    const fetchAdditionalProducts = async () => {
+      const additionalProductsData = [];
+      for (const id of ADDITIONAL_PRODUCT_IDS) {
+        const docRef = doc(db, 'products', id);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          additionalProductsData.push({ id: docSnap.id, ...docSnap.data() });
+        }
+      }
+      setAdditionalProducts(additionalProductsData);
+    };
+
+    const fetchThirdProducts = async () => {
+      const thirdProductsData = [];
+      for (const id of THIRD_PRODUCT_IDS) {
+        const docRef = doc(db, 'products', id);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          thirdProductsData.push({ id: docSnap.id, ...docSnap.data() });
+        }
+      }
+      setThirdProducts(thirdProductsData);
+    };
+
+    const fetchFourthProducts = async () => {
+      const fourthProductsData = [];
+      for (const id of FOURTH_PRODUCT_IDS) {
+        const docRef = doc(db, 'products', id);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          fourthProductsData.push({ id: docSnap.id, ...docSnap.data() });
+        }
+      }
+      setFourthProducts(fourthProductsData);
+    };
+
+
+    fetchProducts();
+    fetchAdditionalProducts();
+    fetchThirdProducts();
+    fetchFourthProducts();
+  }, []);
+
+  const handleAddToCart = (product) => {
+    addProduct(product);
+  };
+
   return (
     <div className='fPDiv'>
+      {loading ? (
+        <div className="spinner-container">
+          <Spinner />
+        </div>
+      ) : (
+        <>
       <h2 className='fPH2'>Productos Destacados:</h2>
-      <h2 className='presentador'>Saga "Nacidos de la Bruma"</h2>
+      <h2 className='fPH2Mid'>Trilogía de Nacidos de la Bruma:</h2>
       <div className='productList'>
         {products.map(product => (
-          <ProductCardHome key={product.id} product={product} />
+          <div key={product.id} className="product-card-wrapper">
+            <ProductCardHome product={product} />
+          </div>
         ))}
       </div>
-      <h2 className='fPH2'>Más libros que leer:</h2>
+      <h2 className='fPH2Mid'>Segunda Era de Nacidos de la Bruma:</h2>
       <div className='productList'>
-      {products2.map(product => (
-          <ProductCardHome key={product.id} product={product} />
+        {additionalProducts.map(product => (
+          <div key={product.id} className="product-card-wrapper">
+            <ProductCardHome product={product} />
+          </div>
         ))}
       </div>
+      <h2 className='fPH2Mid'>Crónicas del Asesino de Reyes:</h2>
+      <div className='productList'>
+        {thirdProducts.map(product => (
+          <div key={product.id} className="product-card-wrapper">
+            <ProductCardHome product={product} />
+          </div>
+        ))}
+      </div>
+      <h2 className='fPH2Mid'>El Archivo de las Tormentas:</h2>
+      <div className='productList'>
+        {fourthProducts.map(product => (
+          <div key={product.id} className="product-card-wrapper">
+            <ProductCardHome product={product} />
+            </div>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 }

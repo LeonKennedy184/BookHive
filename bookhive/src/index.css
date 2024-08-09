@@ -1,0 +1,96 @@
+@import 'slick-carousel/slick/slick.css';
+@import 'slick-carousel/slick/slick-theme.css';
+
+body {
+    font-family: 'Vollkorn', serif;
+    background-color: #F5F5DC;
+    color: #2E2E2E;
+    margin: 0;
+    padding: 0;
+}
+
+.all {
+    background-image: url('./assets/textura-papel.png');
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+header, footer {
+    background-color: #494747;
+    color: #f08408;
+    padding: 8px;
+}
+
+a {
+    color: #f0741b;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #FFD700;
+}
+
+button {
+    background-color: #8B4513;
+    color: #FFF;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #FFD700;
+    color: #3B3B3B;
+}
+
+.productList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.fPH2 {
+    color: #000000;
+}
+
+.fPH2Mid {
+    text-align: center;
+    color: #000000;
+}
+
+.spinner {
+    margin: 100px auto;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    text-align: center;
+}
+
+.spinner .double-bounce1, .spinner .double-bounce2 {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #8B4513;
+    opacity: 0.6;
+    position: absolute;
+    top: 0;
+    left: 0;
+    -webkit-animation: bounce 2.0s infinite ease-in-out;
+    animation: bounce 2.0s infinite ease-in-out;
+}
+
+.spinner .double-bounce2 {
+    -webkit-animation-delay: -1.0s;
+    animation-delay: -1.0s;
+}
+
+@-webkit-keyframes bounce {
+    0%, 100% { -webkit-transform: scale(0.0) }
+    50% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: scale(0.0); -webkit-transform: scale(0.0) }
+    50% { transform: scale(1.0); -webkit-transform: scale(1.0) }
+}

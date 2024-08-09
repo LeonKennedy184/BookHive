@@ -29,7 +29,6 @@ function AddProductForm({ product, onSave }) {
           category,
           image
         });
-        console.log("Product updated with ID: ", product.id);
       } else {
         const docRef = await addDoc(collection(db, 'products'), {
           name,
@@ -37,12 +36,10 @@ function AddProductForm({ product, onSave }) {
           category,
           image
         });
-        console.log("Product added with ID: ", docRef.id);
       }
       clearFields();
       if (onSave) onSave();
     } catch (e) {
-      console.error("Error saving document: ", e);
     }
   };
 

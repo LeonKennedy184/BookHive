@@ -12,7 +12,6 @@ const registerUser = async (email, password, role) => {
       role: role
     });
 
-    console.log('Usuario registrado y rol asignado');
   } catch (error) {
     console.error('Error registrando al usuario: ', error);
   }

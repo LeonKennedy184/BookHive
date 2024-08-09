@@ -6,12 +6,18 @@ import '../styles/AdminPage.css';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import AdminFilters from '../components/AdminFilters';
-import "../styles/AdminFilters.css"
+import "../styles/AdminFilters.css";
+import { Button } from 'antd';
 
 function AdminPage() {
   const [products, setProducts] = useState([]);
   const [editingProduct, setEditingProduct] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortBy, setSortBy] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [minPrice, setMinPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -74,6 +80,15 @@ function AdminPage() {
     setFilteredProducts(filtered);
   };
 
+  const clearFilters = () => {
+    setSearchTerm('');
+    setSortBy(null);
+    setSelectedCategory('');
+    setMinPrice('');
+    setMaxPrice('');
+    handleFilter({ searchTerm: '', sortBy: null, selectedCategory: '', minPrice: '', maxPrice: '' });
+  };
+
   return (
     <div className="admin-page">
       <Header />
@@ -86,7 +101,19 @@ function AdminPage() {
       </ul>
       
       <AddProductForm product={editingProduct} onSave={handleSave} />
-      <AdminFilters onFilter={handleFilter} />
+      
+      <AdminFilters
+        onFilter={(filters) => {
+          handleFilter(filters);
+          setSearchTerm(filters.searchTerm);
+          setSortBy(filters.sortBy);
+          setSelectedCategory(filters.selectedCategory);
+          setMinPrice(filters.minPrice);
+          setMaxPrice(filters.maxPrice);
+        }}
+      />
+      
+
       <div className="product-list">
         {filteredProducts.map((product) => (
           <div key={product.id} className="product-item">

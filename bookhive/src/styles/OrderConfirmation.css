@@ -24,7 +24,8 @@
   
   .order-summary .include-shipping {
     margin-bottom: 12px;
-    font-size: 16px;
+    font-size: 18px;
+    font-family: 'Vollkorn', serif;
   }
   
   .order-summary .order-total {
@@ -34,6 +35,7 @@
   
   .order-summary button {
     margin-top: 12px;
+    font-family: 'Vollkorn', serif;
   }
 
   .user-details {

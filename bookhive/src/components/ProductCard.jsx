@@ -14,6 +14,9 @@ function ProductCard({ product }) {
         <div className='card-content'>
             <h3 className='card-title'>{product.name}</h3>
         </div>
+        <div>
+            <h3 className='H3'>Categoría: {product.category}</h3>
+        </div>
         <div className='card-image-container'>
             <img src={product.image} alt={product.name} className='card-image' />
         </div>
@@ -21,7 +24,10 @@ function ProductCard({ product }) {
             <p className='card-price'>${product.price}</p>
         </div>
 
-        <Button onClick={() => actions.addProduct(product)}>Agregar</Button>
+        <button onClick={() => actions.addProduct(product)} className='add-to-cart-button'>
+        Añadir al carrito
+      </button>
+
 
     </div>
   );

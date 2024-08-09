@@ -5,11 +5,14 @@ import { List, Button, Checkbox, Avatar } from 'antd';
 import '../styles/OrderConfirmation.css';
 import { auth, db } from '../firebaseConfig';
 import { doc, getDoc, collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import Spinner from '../components/Spinner';
 
 const OrderConfirmation = () => {
   const products = useCartStore(state => state.products);
-  const [includeShipping, setIncludeShipping] = React.useState(false);
+  const clearCart = useCartStore(state => state.actions.clearCart);
+  const [includeShipping, setIncludeShipping] = useState(false);
   const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,12 +24,14 @@ const OrderConfirmation = () => {
           const userDoc = await getDoc(userDocRef);
           if (userDoc.exists()) {
             setUser(userDoc.data());
-          } else {
-            console.log('No such document!');
-          }
+          } 
         } catch (error) {
           console.error('Error fetching user data: ', error);
+        } finally {
+          setIsLoading(false);
         }
+      } else {
+        setIsLoading(false);
       }
     };
 
@@ -38,6 +43,11 @@ const OrderConfirmation = () => {
   const finalPrice = includeShipping ? totalPrice + shippingCost : totalPrice;
 
   const handlePlaceOrder = async () => {
+    if (products.length === 0) {
+      alert('El carrito está vacío o no contiene productos. No se puede realizar el pedido.');
+      return;
+    }
+
     const user = auth.currentUser;
     if (!user) {
       alert('No hay usuario autenticado.');
@@ -63,12 +73,17 @@ const OrderConfirmation = () => {
     try {
       await addDoc(collection(db, 'orders'), order);
       alert('¡Pedido realizado con éxito!');
+      await clearCart();
       navigate('/home');
     } catch (error) {
       console.error('Error al guardar la orden: ', error);
       alert('Hubo un problema al realizar el pedido. Inténtalo de nuevo.');
     }
   };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <div className="order-confirmation-container">

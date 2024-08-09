@@ -9,6 +9,7 @@ import { FloatButton } from 'antd'
 import { useCartStore } from './useCartStore'
 import { Cart } from './Cart'
 import { ShoppingCartOutlined } from '@ant-design/icons'
+import Spinner from './components/Spinner';
 
 import HomePage from './pages/HomePage'
 import ProductPage from './pages/ProductPage'
@@ -52,7 +53,7 @@ function App() {
   }, [actions]);
 
   if (!products) {
-    return <p className='app-loading'>Cargando...</p>
+    return <Spinner />;
   }
 
   return (
@@ -81,22 +82,6 @@ function App() {
       </Router>
     </AuthProvider>
   )
-}
-
-function Main() {
-  const navigate = useNavigate();
-  const actions = useCartStore(state => state.actions);
-
-  const handleCheckout = () => {
-    actions.closeCart();
-    navigate('/confirm-order');
-  };
-
-  return (
-    <>
-      <Cart onCheckout={handleCheckout} />
-    </>
-  );
 }
 
 export default App

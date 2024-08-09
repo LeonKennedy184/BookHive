@@ -8,39 +8,57 @@ function AdminFilters({ onFilter }) {
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
 
+  const categories = [
+    'Todos',
+    'Suspenso',
+    'Terror',
+    'Psicológicos',
+    'Fantasía',
+    'Alta Fantasía',
+    'Auto Ayuda',
+    'Ficción y Literatura',
+    'Romance',
+    'Juvenil',
+    'Comic'
+  ];
+
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
-    triggerFilter();
+    triggerFilter(event.target.value, sortBy, selectedCategory, minPrice, maxPrice);
   };
 
   const handleSortChange = (type) => {
-    setSortBy(type);
-    triggerFilter();
+    const newSortBy = type === sortBy ? null : type;
+    setSortBy(newSortBy);
+    triggerFilter(searchTerm, newSortBy, selectedCategory, minPrice, maxPrice);
   };
 
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
-    triggerFilter();
+    triggerFilter(searchTerm, sortBy, event.target.value, minPrice, maxPrice);
   };
 
   const handleMinPriceChange = (event) => {
     setMinPrice(event.target.value);
-    triggerFilter();
+    triggerFilter(searchTerm, sortBy, selectedCategory, event.target.value, maxPrice);
   };
 
   const handleMaxPriceChange = (event) => {
     setMaxPrice(event.target.value);
-    triggerFilter();
+    triggerFilter(searchTerm, sortBy, selectedCategory, minPrice, event.target.value);
   };
 
-  const triggerFilter = () => {
-    onFilter({
-      searchTerm,
-      sortBy,
-      selectedCategory,
-      minPrice,
-      maxPrice
-    });
+  const triggerFilter = (searchTerm, sortBy, selectedCategory, minPrice, maxPrice) => {
+    onFilter({ searchTerm, sortBy, selectedCategory, minPrice, maxPrice });
+  };
+
+  const handleClearFilters = () => {
+    setSearchTerm('');
+    setSortBy(null);
+    setSelectedCategory('');
+    setMinPrice('');
+    setMaxPrice('');
+    triggerFilter('', null, '', '', '');
   };
 
   return (
@@ -51,19 +69,13 @@ function AdminFilters({ onFilter }) {
         value={searchTerm}
         onChange={handleSearchChange}
       />
-      <label htmlFor="categorySelect" className='category'>Seleccionar Categoría:</label>
+      <label htmlFor="categorySelect" className="category">Seleccionar Categoría:</label>
       <select id="categorySelect" value={selectedCategory} onChange={handleCategoryChange}>
-        <option value="">Todos</option>
-        <option value="Suspenso">Suspenso</option>
-        <option value="Terror">Terror</option>
-        <option value="Psicológicos">Psicológicos</option>
-        <option value="Fantasía">Fantasía</option>
-        <option value="Alta Fantasía">Alta Fantasía</option>
-        <option value="Auto Ayuda">Auto Ayuda</option>
-        <option value="Ficción y Literatura">Ficción y Literatura</option>
-        <option value="Romance">Romance</option>
-        <option value="Juvenil">Juvenil</option>
-        <option value="Comic">Cómic</option>
+        {categories.map(category => (
+          <option key={category} value={category === 'Todos' ? '' : category}>
+            {category}
+          </option>
+        ))}
       </select>
       <input
         type="number"
@@ -80,6 +92,7 @@ function AdminFilters({ onFilter }) {
       <div className="button-group">
         <Button onClick={() => handleSortChange('asc')}>Ordenar por Precio Ascendente</Button>
         <Button onClick={() => handleSortChange('desc')}>Ordenar por Precio Descendente</Button>
+        <Button onClick={handleClearFilters}>Limpiar Filtros</Button>
       </div>
     </div>
   );
